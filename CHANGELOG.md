@@ -1,3 +1,7 @@
+## 0.0.3+6
+* Removed the unecessary dependency on flutter
+* Added donate/contribute button
+
 ## 0.0.1+4 - August 24 2021
 * Added an enum called ZipperError to attempt to catch errors.
 

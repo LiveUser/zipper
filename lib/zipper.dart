@@ -1,7 +1,6 @@
 library zipper;
 
 import 'dart:io';
-import 'package:meta/meta.dart';
 import 'dart:async';
 import 'package:async_foreach/async_foreach.dart';
 import 'dart:convert';
@@ -15,8 +14,8 @@ enum ZipperError{
 
 ///Zips the folder into a non-.zip file
 Future<void> zip({
-  @required File outputFile,
-  @required Directory sourceDirectory,
+  required File outputFile,
+  required Directory sourceDirectory,
   bool includeRoot = true,
 })async{
   Map<String, dynamic> filesystem;
@@ -25,7 +24,7 @@ Future<void> zip({
       folder: sourceDirectory,
     );
   }catch(error){
-    return ZipperError.outOfRAM;
+    throw ZipperError.outOfRAM;
   }
   try{
     //Include the root folder if stated on the parameters
@@ -37,7 +36,7 @@ Future<void> zip({
       };
     }
   }catch(error){
-    return ZipperError.outOfRAM;
+    throw ZipperError.outOfRAM;
   }
   //Save the resulting object at the outputFile
   await outputFile.create(recursive: true);
@@ -45,7 +44,7 @@ Future<void> zip({
 }
 ///Reads and converts the folders to Map(What's considered Objects in JavaScript)
 Future<Map<String, dynamic>> _getFolderAsObject({
-  @required Directory folder,
+  required Directory folder,
 })async{
   Map<String, dynamic> map = {};
   List<FileSystemEntity> folderContents = await folder.list().toList();
@@ -70,30 +69,30 @@ Future<Map<String, dynamic>> _getFolderAsObject({
 
 ///UnZips the non-.zip file into a folder
 Future<void> unzip({
-  @required File sourceFile,
-  @required Directory outputDirectory,
+  required File sourceFile,
+  required Directory outputDirectory,
   ///Overwrite the files and folders at the output directory if file/folder names exist.
   bool overWrite = false,
 })async{
   String json = await sourceFile.readAsString();
-  Map<String, dynamic> map;
+  Map<String, dynamic>? map;
   try{
     map = jsonDecode(json);
   }catch(error){
-    return ZipperError.errorParsing;
+    throw ZipperError.errorParsing;
   }
   //Start the function that will extract the merged files
   await _setFilesFromObject(
     extractionDirectory: outputDirectory, 
-    map: map,
+    map: map!,
     overWrite: overWrite,
   );
 }
 
 Future<void> _setFilesFromObject({
-  @required Directory extractionDirectory,
-  @required Map<String, dynamic> map,
-  @required bool overWrite,
+  required Directory extractionDirectory,
+  required Map<String, dynamic> map,
+  required bool overWrite,
 })async{
   await map.keys.toList().asyncForEach((keyName)async{
     if(map[keyName] is List){
@@ -123,8 +122,8 @@ Future<void> _setFilesFromObject({
 
 //Unique Path Name Generator
 Future<String> _uniquePathGenerator({
-  @required String path,
-  @required bool isDirectory,
+  required String path,
+  required bool isDirectory,
 })async{
   String fileName = path.substring(path.lastIndexOf("/") + 1);
   bool pathIsUnique = false;

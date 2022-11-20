@@ -93,9 +93,13 @@ try{
 }
 ~~~
 
-
-
-
 ## Random notes
 
 - If the idea catches up the output file is meant to be saved as a File with the extension ".file_system" to denote that its using the specifications stated in this document
+
+------------------------------------------------------------
+## Contribute/donate by tapping on the Pay Pal logo/image
+
+<a href="https://www.paypal.com/paypalme/onlinespawn"><img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg"/></a>
+
+------------------------------------------------------------
